@@ -1,0 +1,66 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_strtrimfail.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: phabets <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/11/25 15:06:53 by phabets           #+#    #+#             */
+/*   Updated: 2021/12/01 15:09:43 by phabets          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "libft.h"
+
+size_t	start_c(char const *set, char const *s1)
+{
+	size_t	start;
+	int	i;
+
+	start = 0;
+	i = 0;
+	while (set[i])
+	{
+		if (s1[start] == set[i])
+		{
+			start++;
+			i = 0;
+		}
+		i++;
+	}
+	return (start);
+}
+
+char	*ft_strtrim(char const *s1, char const *set)
+{
+	size_t	lenf;
+	int		i;
+
+	if (!s1 || !set)
+		return (NULL);
+	lenf = ft_strlen(s1);
+	i = -1;
+	while (set[++i])
+	{
+		if (s1[lenf - 1] == set[i])
+		{
+			lenf--;
+			i = -1;
+		}
+	}
+	if (lenf != 0)
+		return (ft_substr(s1, start_c(set, s1), (lenf - start_c(set, s1))));
+	return (malloc(0));
+
+}
+
+int main(void)
+{
+	char	*s1 = "tu te fou de ma gueule ?";
+	char	*set = "tu?";
+	char	*str;
+
+	str = ft_strtrim(s1, set);
+	printf("%s",str);
+	return (0);
+}
